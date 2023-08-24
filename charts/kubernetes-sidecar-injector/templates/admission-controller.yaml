@@ -36,7 +36,7 @@ webhooks:
   timeoutSeconds: 10
   objectSelector:
     matchExpressions:
-    - key: sidecar.me/inject
+    - key: {{ .Values.admission.podSelectorKey | default "sidecar.me/inject" | quote }}
       operator: In
       values:
       - "True"

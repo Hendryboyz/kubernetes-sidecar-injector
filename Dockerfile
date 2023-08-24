@@ -18,6 +18,7 @@ WORKDIR /app
 
 COPY --from=builder --chown=node:node /app/package*.json ./
 COPY --from=builder --chown=node:node /app/tsconfig.json ./
+
 RUN npm ci --production && npm cache clean --force
 
 COPY --from=builder --chown=node:node /app/dist ./dist

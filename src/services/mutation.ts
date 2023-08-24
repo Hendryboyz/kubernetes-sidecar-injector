@@ -52,10 +52,48 @@ export const handle = (admissionReviewRequest: V1AdmissionRequest<V1Pod>): V1Adm
 
 const injectContainer = (containers: V1Container[]): V1Container[] => {
   const sideCarContainer: V1Container = {
-    name: 'curl',
-    image: 'yauritux/busybox-curl:latest',
+    name: 'license-checker',
+    image: 'hendryboyz/busybox-license-checker:latest',
     imagePullPolicy: 'IfNotPresent',
-    command: ["/bin/sh", "-ec", "while :; do echo '.'; sleep 5 ; done"]
+    env: [
+      {
+        name: 'KEYGEN_ACCOUNT',
+        valueFrom: {
+          secretKeyRef: {
+            name: 'license-secret',
+            key: 'KEYGEN_ACCOUNT',
+          }
+        }, 
+      },
+      {
+        name: 'KEYGEN_LICENSE_ID',
+        valueFrom: {
+          secretKeyRef: {
+            name: 'license-secret',
+            key: 'KEYGEN_LICENSE_ID',
+          }
+        }, 
+      },
+      {
+        name: 'KEYGEN_LICENSE_KEY',
+        valueFrom: {
+          secretKeyRef: {
+            name: 'license-secret',
+            key: 'KEYGEN_LICENSE_KEY',
+          }
+        }, 
+      },
+      {
+        name: 'KEYGEN_HOST',
+        valueFrom: {
+          secretKeyRef: {
+            name: 'license-secret',
+            key: 'KEYGEN_HOST',
+          }
+        }, 
+      },
+    ],
+    command: ["/bin/bash", "-ec", "while :; do ./health.sh; sleep 10 ; done"]
   };
 
   return [...containers, sideCarContainer];

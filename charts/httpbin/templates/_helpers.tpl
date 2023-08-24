@@ -40,7 +40,7 @@ helm.sh/chart: {{ include "httpbin.chart" . }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
-sidecar.me/inject: "True"
+sidecar.license.ailabs/inject: "True"
 {{- end }}
 
 {{/*
@@ -49,5 +49,5 @@ Selector labels
 {{- define "httpbin.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "httpbin.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
-sidecar.me/inject: "True"
+sidecar.license.ailabs/inject: "True"
 {{- end }}

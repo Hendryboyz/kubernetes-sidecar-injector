@@ -4,10 +4,10 @@ deployment:
   replicaCount: 1
 
   image:
-    repository: mohllal/kubernetes-sidecar-injector
-    pullPolicy: Always
+    repository: hendryboyz/license-verify-injector
+    pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
-    tag: latest
+    tag: 1.0.1
 
   imagePullSecrets: []
 
@@ -78,6 +78,8 @@ admission:
 
   # Annotations to add to service. (Optional)
   annotations: {}
+
+  podSelectorKey: "sidecar.license.ailabs/inject"
 
   # admission CA can be used to override the Certs that will be used
   # to sign the keys used by the admission operator.
