@@ -93,7 +93,17 @@ const injectContainer = (containers: V1Container[]): V1Container[] => {
         }, 
       },
     ],
-    command: ["/bin/bash", "-ec", "while :; do ./health.sh; sleep 10 ; done"]
+    command: ["/bin/bash", "-ec", "while :; do ./health.sh; sleep 10 ; done"],
+    resources: {
+      limits: {
+        cpu: '200m',
+        memory: '64Mi',
+      },
+      requests: {
+        cpu: '10m',
+        memory: '64Mi',
+      },
+    }
   };
 
   return [...containers, sideCarContainer];
